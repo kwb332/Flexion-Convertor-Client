@@ -25,30 +25,38 @@ const ExamList = (props) => {
     const [examDescription, setExamDescription] = useState(false);
 
     //array for displaying table
-    const examListHeader = ['Student Id', 'Teacher', 'Exam ID', 'Description', 'Date Created', 'Complete', 'Graded', 'Action'];
+    const examListHeader = ['Student Id', 'Teacher', 'Exam ID', 'Exam Description', 'Date Created', 'Complete', 'Graded', 'Action'];
     const displayList = ['studentId', 'teacherId', 'examId', 'description', 'dateCreated', 'isComplete', 'isGraded'];
 
     let { loading, error, examByUserID } = props.getexamByUserID;
 
+    //create a filtered exam array
+    let filteredExamsList;
+
+    if(examByUserID){
+        filteredExamsList = examByUserID.filter(inc => !inc.isComplete);
+    }
+
     //set examID in a state so that it can be passed to the modal and open the modal
-    const updateSelect = (e, selectedExam, description ,teacher) => {
+    const updateSelect = (e, rowIndex) => {
         e.preventDefault()
-        setSelectedExamId(selectedExam)
-        setTeacherId(teacher)
-        setExamDescription(description)
-        toggleQuestionsModal()
+
+        setSelectedExamId(filteredExamsList[rowIndex]["examId"]);
+        setExamDescription(filteredExamsList[rowIndex]["description"]);
+        setTeacherId(filteredExamsList[rowIndex]["teacherId"]);
+        toggleQuestionsModal();
     }
 
     //function to toggle the closing and opening of the modal at every true state
     const toggleQuestionsModal = () => {
-        setmodalState(prevState => (!prevState))
+        setmodalState(prevState => (!prevState));
     }
 
     return (
 
         <Fragment>
             <Container className="mt-5 mr-2 mb-5">
-                <h2 className="mb-4"> Pending Exams </h2>
+                <h3 className="mb-4"> Pending Exams </h3>
 
 
                 {loading ? <p className="mt-3">loading data.. </p> :
@@ -63,16 +71,14 @@ const ExamList = (props) => {
                             </thead>
 
                             <tbody >
-                                {examByUserID.filter(inc => !inc.isComplete).map((rowItems, rowIndex) =>
+                                {filteredExamsList.map((rowItems, rowIndex) =>
                                     <tr key={rowIndex}>
                                         {displayList.map((column, colIndex) =>
                                             <td key={colIndex}>{rowItems[column]}</td>)}
 
                                         <td>
                                             <button type="button" className="btn-sm btn-Light btn-hover"
-                                                onClick={(e) => updateSelect(e, examByUserID[rowIndex]["examId"],
-                                                        examByUserID[rowIndex]["description"],
-                                                        examByUserID[rowIndex]["teacherId"])}>
+                                                onClick={(e) => updateSelect(e, rowIndex)}>
                                                 Start
                                             </button>
                                         </td>

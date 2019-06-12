@@ -28,7 +28,7 @@ const Answer = (props) => {
     const [addReportStatus, setAddReportStatus] = useState(false);
 
 
-    let { loading, error, examQuestions } = props.examQuestionsByExamID
+    let { loading, error, examQuestions } = props.examQuestionsByExamID;
 
 
     //submit answers
@@ -83,11 +83,16 @@ const Answer = (props) => {
 
         setSubmitExamLoading(true);
 
+        let teacher = props.teacherByID.teacherByID;
+        let student = props.studentByID.studentByID;
+
+
         props.submitExamToTeacher({
             variables: {
                 submitTeacher: {
                     "examId": Number(props.examID),
-                    "studentId": Number(props.studentId)
+                    "studentName": student.firstName + ' ' + student.lastName,
+                    "teacherName": teacher.firstName + ' ' + teacher.lastName,
                 }
             }
 
@@ -98,16 +103,16 @@ const Answer = (props) => {
     //Add Report - this function is called in the background to add report after submission of exams
     //is successful
 
-    const addReports = (report) => {
+    const addReports = (rept) => {
         reset()
         let reportData = {
             report: []
         };
-
+      
         let teacher = props.teacherByID.teacherByID;
         let student = props.studentByID.studentByID;
 
-        report.map(item =>
+        rept.map(item =>
             reportData.report.push({
                 "examId": item.examId,
                 "studentID": Number(props.studentId),
@@ -141,10 +146,10 @@ const Answer = (props) => {
         setCurrentIndex(0)
     }
 
-
+    
     return (
 
-        <Modal isOpen={props.modalState}>
+        <Modal isOpen={props.modalState} scrollable={true}>
 
             <Row className="border-bottom-light">
                 <Col>
@@ -163,7 +168,7 @@ const Answer = (props) => {
 
             {/* Messages to be displayed submit to teacher is unsuccessful */}
 
-            {setSubmitExamLoading === false ? <Alert status={"danger"} title={'Something went wrong!'}
+            {submitExamLoading === false ? <Alert status={"danger"} title={'Something went wrong!'}
                 message={'Could not submit your exam.'} /> : null}
 
 
@@ -243,7 +248,7 @@ const Answer = (props) => {
                                      </p>
 
                             <Button color="muted" className="mr-4 btn-sm border border-primary float-right"
-                                type="button" onClick={submitExam}> Submit To Teacher </Button>
+                                type="button" onClick={submitExam} disabled={addReportStatus}> Submit To Teacher </Button>
 
                         </ModalFooter>
 

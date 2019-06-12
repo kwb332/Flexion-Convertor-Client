@@ -10,6 +10,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import Login from '../Containers/Login';
 import TeacherDashboard from '../Containers/Teacher/Dashboard';
 import StudentDashboard from '../Containers/Student/Dashboard';
+import Spinner from '../Components/Spinner';
 
 
 
@@ -19,11 +20,10 @@ const AsyncTeacher = lazy(() => import('../Containers/Teacher/Teachers'));
 const AsyncStudent = lazy(() => import('../Containers/Student/Student'));
 
 
-
 const AppRoutes = (props) => {
 
     return (
-        <Suspense fallback={<div>Loading ... </div>}>
+        <Suspense fallback={<div><Spinner /></div>}>
             <Switch>
                 <Route path="/student/:student/dashboard" component={StudentDashboard} />
                 <Route path="/teacher/:teacher/dashboard" component={TeacherDashboard} />

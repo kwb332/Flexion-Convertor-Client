@@ -13,6 +13,7 @@ import AppRoutes from './PageRoutes/Routes';
 import Navbar from './Containers/Navbar';
 
 
+
 //Apollo Client setup - change 'uri' here to update the endpoint
 const client = new ApolloClient({
   uri: "https://cors-anywhere.herokuapp.com/https://flexion-convertor-gateway.herokuapp.com/graphql"

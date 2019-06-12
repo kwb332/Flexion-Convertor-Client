@@ -11,33 +11,31 @@ import { Table} from 'reactstrap';
 
 //graphql
 import { graphql, compose } from 'react-apollo';
-import{ reportByExamID } from '../../../Services/Report/reportService';
+import { getexamByTeacherID } from '../../../Services/Exam/examService';
 
 
-const ReportTable = (props) => {
+const ExamList = (props) => {
 
     //array for displaying table
-        const reportListHeader = ['Exam ID', 'Exam Date','Student ID', 'Student Name', 'Description','Input Unit',
-                    'Output Unit', 'Question Value', 'Student Response', 'isCorrect','Teacher Name'];
+        const reportListHeader = ['Exam Id','Exam Description','student Id', 'Complete']
 
     //to filter from result array
-        const displayList = ['examId', 'examDate' , 'studentID', 'studentName', 'examDescription',
-                'inputUnitOfMeasure', 'outPutUnitOfMeasure','inputValue' ,'studentResponse', "isCorrect", 'teacherName' ];
+        const displayList = ['examId','description' , 'studentId', 'isComplete'];
        
-        let {loading, error, reportByExamID } = props.reportByExamID;
-
+        
+         let { loading, error, examByTeacherID } = props.getexamByTeacherID
 
     return(
         <Fragment>
 
                         <div style={{background: '#efefef', display:'inline-block'}}>
-                                <h5 style={{margin: '0'}}> Exams Created by teacher ID - {props.teacherId} </h5>
+                                <h5 style={{margin: '0'}}> Exams Created by Teacher ID - {props.teacherId} </h5>
                         </div>
                 
                         { loading ? <p className="mt-3">loading data.. </p> :
                         error ? <p className="mt-3">There was a problem while your fetching data.</p> :
 
-                            <Table className="table-responsive table-hover"  style={{fontSize: "13px"}}>
+                            <Table className="table-responsive table-hover">
                                 <thead className="thead-dark">
                                     <tr>
                                         {reportListHeader.map((title, index) =>
@@ -46,7 +44,7 @@ const ReportTable = (props) => {
                                 </thead>
 
                                 <tbody >
-                                        {reportByExamID.filter(i => i.studentID === props.userID ).map((rowItems, rowIndex) =>
+                                        {examByTeacherID.map((rowItems, rowIndex) =>
 
                                             rowItems ===  null ? ' ': 
 
@@ -67,14 +65,14 @@ const ReportTable = (props) => {
 }
 
 export default compose(
-                         graphql(reportByExamID, {
-                            name: "reportByExamID",
+                        graphql(getexamByTeacherID, {
+                            name: "getexamByTeacherID",
                             options: (props) => {
                                 return {
                                     variables: {
-                                        examID: Number(props.examID)
+                                        teacherID: Number(props.teacherId)
                                     }
                                 }
                             }
                         })
-                        )(ReportTable);
+                        )(ExamList);

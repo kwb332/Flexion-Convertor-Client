@@ -1,6 +1,4 @@
 ## 
-This is the front-end to the project.  Project has been deployed to heroku at the following link:
-https://flexion-convertor.herokuapp.com
 
 To run this project have node and create-react-app installed.
 navigate into the project folder and run 'npm run install'.

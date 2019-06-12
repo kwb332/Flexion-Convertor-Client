@@ -70,7 +70,7 @@ const Report = (props) => {
                 <Container className="mt-5 mr-2 mb-5"> 
     
                      <Row className="justify-content-left">
-                        <Col md="6 p-0">
+                        <Col md="8">
                              <h2 className="ml-2 mb-4 mr-2">View Reports</h2> 
 
                             <Form>

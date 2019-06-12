@@ -33,18 +33,19 @@
       //Submit exam to student by teacher
       const submitExamToTeacher = gql`
             mutation submitToTeacher($submitTeacher: ExamInput!) {
-              submitToTeacher(submitTeacher: $submitTeacher) {
-                    examDate
-                    examId
-                    inputUnitOfMeasure
-                    inputValue
-                    isCorrect
-                    outPutUnitOfMeasure
-                    studentName
-                    studentResponse
-
-            }
-          }`;
+            submitToTeacher(submitTeacher: $submitTeacher) {
+                examDate
+                examId
+                examDescription
+                inputUnitOfMeasure
+                inputValue
+                isCorrect
+                outPutUnitOfMeasure
+                studentName
+                teacherName
+                studentResponse
+           }
+        }`;
 
 
       //Get list of all exams
