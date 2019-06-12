@@ -8,7 +8,7 @@ import React, { useState, Fragment } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { getexamByUserID, examQuestionsByExamID, addAnswer, submitExamToTeacher } from '../../Services/Exam/examService';
 import { teacherByID, studentByID } from '../../Services/User/userService';
-import { addReports } from '../../Services/Report/reportService';
+import { addReports, reportByExamID } from '../../Services/Report/reportService';
 
 //Styling
 import { Row, Col, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, ModalFooter } from 'reactstrap';
@@ -132,7 +132,10 @@ const Answer = (props) => {
             variables: {
                 "forms": reportData.report
             }
-            ,refetchQueries: () => [{ query: getexamByUserID, variables: { userID: Number(props.studentId) } }]
+            ,refetchQueries: () => [{ query: getexamByUserID, variables: { userID: Number(props.studentId)}},
+                                    { query: reportByExamID, variables: { examID: Number(props.examID)}}]
+
+
         }).then((res) => setAddReportStatus(res.data.addReports))
             .catch((err) => setAddReportStatus(err.data.addReports))
     }
