@@ -1,6 +1,10 @@
 ## 
+The application is hosted at the following URL: https://flexion-convertor.herokuapp.com/
 
-To run this project have node and create-react-app installed.
+A video demo of how to use the application is located in this repository under the following folder : Flexion-Convertor-Demo.  
+Grab some pop-corn and enjoy.
+
+To run this project on your local machine have node and create-react-app installed.
 navigate into the project folder and run 'npm run install'.
 
 src/public/index.html - is the only html file for this SPA.
